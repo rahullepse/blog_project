@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.urls import reverse
 from taggit.managers import TaggableManager
+from django.utils.text import slugify
 
 # Create your models here.
 class CustomManager(models.Manager):
@@ -14,7 +15,7 @@ class Post(models.Model):
     STATUS_CHOICE = (('draft','Draft'),('published','Published'))
     title = models.CharField(max_length=256)
     slug = models.SlugField(max_length=256,unique_for_date='publish')
-    author = models.ForeignKey(User,related_name='blog',on_delete=True)
+    author = models.ForeignKey(User,related_name='blog',on_delete=models.CASCADE)
     body = models.TextField()
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
@@ -29,16 +30,20 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Post, self).save(*args, **kwargs)
+
     def get_absolute_url(self):
         return reverse('post_details',args=[self.publish.year,
                                             # self.publish.strftime('%m'),
                                             # self.publish.strftime('%d'),
-                                            self.publish.month,self.publish.day,
-                                            self.slug])
+                                            self.publish.month,self.publish.day,self.slug]
+                       )
 
 
 class Comments(models.Model):
-    post = models.ForeignKey(Post,related_name='comments',on_delete=True)
+    post = models.ForeignKey(Post,related_name='comments',on_delete=models.CASCADE)
     name = models.CharField(max_length=256)
     email = models.EmailField()
     body = models.TextField()

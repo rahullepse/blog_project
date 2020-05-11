@@ -10,7 +10,7 @@
     width: 36%;
     float: right;
     padding: 10px;
-    background: yellowgreen;
+    background: darkgreen;
     height: 100%;
 }
 
@@ -48,5 +48,12 @@ a{
     font-weight: bold;
 }
 
+input{
+    color: black;
+}
+
+textarea{
+    color: black;
+}
 
 
