@@ -5,6 +5,7 @@ from django.urls import reverse
 from taggit.managers import TaggableManager
 from django.utils.text import slugify
 
+
 # Create your models here.
 class CustomManager(models.Manager):
     def get_queryset(self):
@@ -16,6 +17,7 @@ class Post(models.Model):
     title = models.CharField(max_length=256)
     slug = models.SlugField(max_length=256,unique_for_date='publish')
     author = models.ForeignKey(User,related_name='blog',on_delete=models.CASCADE)
+    blog_photo = models.ImageField(upload_to='images/')
     body = models.TextField()
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)

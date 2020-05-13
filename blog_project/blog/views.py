@@ -81,7 +81,7 @@ def emailsend(request,id):
 # @login_required(function=LogIn,redirect_field_name='/login/')
 class CreatePost(CreateView):
     model = Post
-    fields = ('title','author','body','status','tags')
+    fields = ('title','author','blog_photo','body','status','tags')
     template_name = 'blog/blog.html'
     success_url = '/'
 
@@ -99,7 +99,8 @@ class SignUp(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.password = make_password('password')
+        password = form.cleaned_data['password']
+        self.object.password = make_password(password)
         self.object.save()
         return super(ModelFormMixin, self).form_valid(form)
 

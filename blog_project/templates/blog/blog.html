@@ -58,7 +58,10 @@
         <h1><a href="/">INDIA'S BLOG</a></h1>
             <h2>{{ post.title }}</h2>
             <p id="date">Published on {{ post.publish }} by {{ post.author|title }}</p>
+
+            <img alt="" src="/media/static/{{ post.blog_photo }}" style="width:200px;height:250px;">
             {{ post.body | linebreaks }}
+
             <a href="/sendmail/{{ post.id }}/" class="btn btn-lg btn-primary">Share Post by Email</a>
             <h2>{{ message }}</h2>
 
@@ -69,7 +72,7 @@
             {% if comments %}
                 {% for comment in comments %}
                     <p id="ch">comment{{ forloop.counter }} by '{{ comment.name }}' created on {{ comment.created }}</p>
-                    <div class="cb">{{ comment.body | linebreaks }}</div>
+                    <div id="cb">{{ comment.body | linebreaks }}</div>
                 {% endfor %}
             {% else %}
                 <p>There are No Comments Yet..!</p>
@@ -96,7 +99,7 @@
         {% elif login %}
             <h2>Login:</h2>
         {% endif %}
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 {{ form.as_p }}
                 {% csrf_token %}
                 <input type="submit" class="btn btn-lg btn-success" value="Submit">

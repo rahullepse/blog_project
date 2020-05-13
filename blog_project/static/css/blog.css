@@ -33,10 +33,15 @@ body{
 
 #ch{
     color: yellow;
-    font-size: 20px;
+    font-size: 15px;
     font-style: italic;
     border-bottom: 2px solid yellow;
 }
+
+#cb{
+    font-size: 20px;
+}
+
 
 a{
     color: greenyellow;
@@ -56,4 +61,11 @@ textarea{
     color: black;
 }
 
+option{
+    background-color: black;
+}
+
+option:checked{
+    background-color: black;
+}
 
